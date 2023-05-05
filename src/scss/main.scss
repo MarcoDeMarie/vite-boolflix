@@ -1,0 +1,8 @@
+@use './partials/variables' as *;
+
+
+@import '@fontsource/monsterrat/index.css';
+
+body{
+  font-family: $primary-font;
+}
