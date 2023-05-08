@@ -3,6 +3,7 @@
 import axios from 'axios'
 import Header from './components/Header.vue'
 import Main from './components/Main.vue'
+
 import { store } from './data/store' 
 
 
@@ -19,22 +20,19 @@ export default{
     }
   },
   methods:{
-    getApi(){
-      axios.get(store.apiUrl, {
-        params: {
-          api_key: store.token,
-          query: store.titleSearch,
-        }
-      })
+    getApi(type){
+      let apiUrl = store.apiUrl + type;
+      axios.get(apiUrl, {params: store.apiParams})
         .then(result => {
-          store.movies = result.data.results;
-          console.log(store.movies)
+          store[type] = result.data.results;
       })
     } 
   },
 
   mounted(){
-    this.getApi();
+    this.getApi('movie');
+    this.getApi('tv');
+
   }
 }
 
@@ -42,10 +40,10 @@ export default{
 
 <template>
 
-  <div v-for="(movie, index) in store.movies" :key="index">{{ movie.title }}</div>
+  
   
 
-  <Header @startSearch="getApi" />
+  <Header @startSearch="getApi('tv'); getApi('movie')"/>
 
   <Main />
 

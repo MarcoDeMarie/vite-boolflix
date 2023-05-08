@@ -25,7 +25,7 @@ export default{
       </div>
 
       <div class="reserch">
-        <input v-model.trim="store.titleSearch" type="text" placeholder="Cerca un film o una Serie Tv...">
+        <input v-model.trim="store.apiParams.query" type="text" placeholder="Cerca un film o una Serie Tv...">
         <button @click="$emit('startSearch')" >Cerca</button>
       </div>
 
