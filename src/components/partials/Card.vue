@@ -12,12 +12,6 @@ export default {
     }
   },
 
-  methods:{
-    showDescription(event){
-      event.currentTarget.classList.remove('hide')
-      event.currentTarget.classList.add('show')
-    }
-  }
 }
 </script>
 
@@ -27,28 +21,19 @@ export default {
   <div
     class="card"
     v-for="(movie, index) in store.movie"
-    :key="index"
-    @mouseover="showDescription">
+    :key="index">
 
+    <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`" :alt="movie.title">
 
-    <div>
+    <div class="description">
       <h3>{{movie.title}}</h3>
       <h5>{{ movie.original_title }}</h5>
 
       <div class="language">
         <span>Language: </span><img
-        v-if="movie.original_language === 'it'"
         class="flag"
-        src="/img/it.png"
+        :src="`/img/${movie.original_language}.png`"
         alt="">
-        <img
-        v-else-if="movie.original_language === 'en'"
-        class="flag"
-        src="/img/en.png"
-        alt="">
-
-        <p v-else>{{ movie.original_language }}</p>
-      
       </div>
         <div class="stars">
           <span>Rating:
@@ -73,26 +58,17 @@ export default {
     v-for="(tv, index) in store.tv"
     :key="index">
     
-    <div>
+    <img :src="`https://image.tmdb.org/t/p/w500/${tv.poster_path}`" :alt="tv.name">
+    <div class="description">
       <h2>{{tv.name}}</h2>
     <h5>{{ tv.original_name }}</h5>
 
-    <div class="language">
-      <span>Language: </span><img
-      v-if="tv.original_language === 'it'"
-      class="flag"
-      src="/img/it.png"
-      alt="">
-      <img
-      v-else-if="tv.original_language === 'en'"
-      class="flag"
-      src="/img/en.png"
-      alt="">
-
-      <p v-else>{{ tv.original_language }}</p>
-    </div>
-    
-
+      <div class="language">
+          <span>Language: </span><img
+          class="flag"
+          :src="`/img/${tv.original_language}.png`"
+          alt="">
+      </div>
       <div class="stars">
         <span>Rating: </span><p
           v-for="index in Math.round(tv.vote_average/2)"
@@ -120,21 +96,14 @@ span{
   margin-left: 15px;
 }
 
-.show{
-  display: block;
-}
-
-.hide{
-  display: none;
-}
-
-
 .card{
   height: 400px;
   width: 250px;
   background-color: rebeccapurple;
   margin: 10px 10px 10px 10px;
 }
+
+
 .flag{
   width: 20px;
   height: 15px;
@@ -153,4 +122,15 @@ span{
     margin-left: 5px;
   }
   
+.card .description {
+  display: none;
+}
+
+.card:hover > img {
+  display: none;
+}
+
+.card:hover .description {
+  display: block;
+}
 </style>
